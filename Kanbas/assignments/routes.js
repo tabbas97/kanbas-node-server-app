@@ -20,6 +20,15 @@ export default function AssignmentRoutes(app) {
         res.send(assignment);
     });
 
+    // Get Assignments by Course ID
+    app.get("/api/assignments/course/:courseId", (req, res) => {
+        console.log(req.params);
+        const { courseId } = req.params;
+        const assignments = Database.assignments.filter((a) => a.course === courseId);
+        console.log(assignments);
+        res.send(assignments);
+    });
+
     // Retrieve All
     app.get("/api/assignments", (req, res) => {
         const assignments = Database.assignments;
