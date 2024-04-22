@@ -9,6 +9,8 @@ import CourseRoutes from './Kanbas/courses/routes.js';
 import ModuleRoutes from './Kanbas/modules/routes.js';
 import AssignmentRoutes from './Kanbas/assignments/routes.js';
 import UserRoutes from './Users/routes.js';
+import QuizRoutes from './Kanbas/quizzes/routes.js';
+import QuestionRoutes from './Kanbas/questions/routes.js';
 import cors from 'cors';
 
 const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || 'mongodb://localhost:27017/kanbas';
@@ -23,6 +25,7 @@ db.once('open', function() {
 const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
+console.log('CORS Origin: ' + process.env.FRONTEND_URL);
 app.use(cors({
     origin: process.env.FRONTEND_URL,
     credentials: true
@@ -47,4 +50,6 @@ ModuleRoutes(app);
 CourseRoutes(app);
 AssignmentRoutes(app);
 UserRoutes(app);
-app.listen(4000, () => console.log('Server running on port 4000'));
+QuizRoutes(app);
+QuestionRoutes(app);
+app.listen(process.env.APP_PORT || 4000, () => console.log('Server running on port 4000'));
